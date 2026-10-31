@@ -1,0 +1,40 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Lights Simulator",
+        "description": "Allume et éteint vos lampes au hasard quand la maison est vide. Les plages, le rythme, les capteurs de luminosité et les sauvegardes se règlent ensuite dans le panneau « Lights Simulator ».",
+        "data": {
+          "declencheur": "Ce qui déclenche le mode Auto",
+          "alarme": "Alarme",
+          "personnes": "Personnes",
+          "lampes": "Lampes à utiliser",
+          "importer": "Reprendre mes réglages actuels (entrées « Simulateur présence »)"
+        },
+        "data_description": {
+          "alarme": "Utilisée si le déclenchement se fait par l'alarme.",
+          "personnes": "Utilisées si le déclenchement se fait par la présence : la maison est vide quand toutes sont absentes.",
+          "importer": "Importe plages, jours, rythme, poids et mode. Les entrées existantes ne sont ni modifiées ni supprimées."
+        }
+      }
+    },
+    "error": {
+      "alarme_requise": "Choisissez l'alarme.",
+      "personnes_requises": "Choisissez au moins une personne.",
+      "lampes_requises": "Choisissez au moins une lampe."
+    },
+    "abort": {
+      "already_configured": "Lights Simulator est déjà installé.",
+      "single_instance_allowed": "Lights Simulator est déjà installé."
+    }
+  },
+  "selector": {
+    "declencheur": {
+      "options": {
+        "alarme": "L'alarme est armée en absence",
+        "personnes": "Toutes les personnes sont absentes",
+        "les_deux": "L'un ou l'autre"
+      }
+    }
+  }
+}

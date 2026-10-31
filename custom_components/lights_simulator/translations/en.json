@@ -1,0 +1,40 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Lights Simulator",
+        "description": "Randomly turns your lights on and off while the house is empty. Time windows, rhythm, light sensors and backups are set afterwards in the « Lights Simulator » panel.",
+        "data": {
+          "declencheur": "What triggers Auto mode",
+          "alarme": "Alarm",
+          "personnes": "People",
+          "lampes": "Lights to use",
+          "importer": "Import my current settings (« Simulateur présence » helpers)"
+        },
+        "data_description": {
+          "alarme": "Used when the alarm triggers the simulation.",
+          "personnes": "Used when presence triggers the simulation: the house is empty when everyone is away.",
+          "importer": "Imports windows, days, rhythm, weights and mode. Existing helpers are neither changed nor removed."
+        }
+      }
+    },
+    "error": {
+      "alarme_requise": "Choose the alarm.",
+      "personnes_requises": "Choose at least one person.",
+      "lampes_requises": "Choose at least one light."
+    },
+    "abort": {
+      "already_configured": "Lights Simulator is already set up.",
+      "single_instance_allowed": "Lights Simulator is already set up."
+    }
+  },
+  "selector": {
+    "declencheur": {
+      "options": {
+        "alarme": "The alarm is armed away",
+        "personnes": "Everyone is away",
+        "les_deux": "Either one"
+      }
+    }
+  }
+}
