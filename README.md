@@ -1,5 +1,7 @@
 # Lights Simulator
 
+<img src="custom_components/lights_simulator/brand/logo.png" alt="Lights Simulator" width="300">
+
 🇫🇷 [Français](#français) · 🇬🇧 [English](#english)
 
 [![Release](https://img.shields.io/github/v/release/akoonet-homeassistant/lights_simulator)](https://github.com/akoonet-homeassistant/lights_simulator/releases)
