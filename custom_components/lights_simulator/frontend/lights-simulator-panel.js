@@ -345,7 +345,7 @@ class LightsSimulatorPanel extends HTMLElement {
       <section class="card">
         <h2>Affichage</h2>
         ${this._interrupteur("Afficher dans la barre latérale", "general", "barre_laterale", this._valeur("general", "barre_laterale") !== false)}
-        <p class="k petit">Masqué, le panneau reste accessible par la carte Lovelace (bouton « Ouvrir les réglages »), par Paramètres → Appareils et services → Lights Simulator → Configurer, ou à l'adresse /lights-simulator.</p>
+        <p class="k petit">Masqué, le panneau reste accessible depuis Paramètres → Appareils et services → Lights Simulator (lien « Visiter » de l'appareil, ou bouton Configurer), par la carte Lovelace (bouton « Ouvrir les réglages »), ou à l'adresse /lights-simulator.</p>
       </section>
       <section class="card"><h2>Journal</h2>${journal}</section>`;
   }

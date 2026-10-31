@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 DOMAIN = "lights_simulator"
-VERSION = "2026.11.3"
+VERSION = "2026.11.4"
 NOM_APPAREIL = "Lights Simulator"
 
 PANEL_URL = "lights-simulator"

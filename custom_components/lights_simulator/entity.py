@@ -6,7 +6,7 @@ from homeassistant.helpers.device_registry import DeviceInfo
 from homeassistant.helpers.dispatcher import async_dispatcher_connect
 from homeassistant.helpers.entity import Entity
 
-from .const import DOMAIN, NOM_APPAREIL, SIGNAL_MAJ, VERSION
+from .const import DOMAIN, NOM_APPAREIL, PANEL_URL, SIGNAL_MAJ, VERSION
 from .engine import Moteur
 
 
@@ -26,6 +26,8 @@ class EntiteSimulateur(Entity):
             manufacturer="akoonet",
             model="Simulation de présence",
             sw_version=VERSION,
+            # Lien « Ouvrir » sur la fiche de l'appareil : mène au panneau même s'il est masqué
+            configuration_url=f"homeassistant://{PANEL_URL}",
         )
 
     async def async_added_to_hass(self) -> None:

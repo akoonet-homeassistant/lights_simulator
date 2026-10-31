@@ -104,7 +104,13 @@ Options : `titre` (texte affiché), `prefixe` (si vous avez renommé les entité
 
 ### Retirer Lights Simulator de la barre latérale
 
-Désactivez **Afficher dans la barre latérale**, dans l'onglet *Fonctionnement* du panneau ou par *Paramètres → Appareils et services → Lights Simulator → Configurer*. Le panneau reste accessible par le bouton « Ouvrir les réglages » de la carte, par ce même bouton *Configurer* (pour le réafficher), ou à l'adresse `/lights-simulator`.
+Désactivez **Afficher dans la barre latérale**, dans l'onglet *Fonctionnement* du panneau ou par *Paramètres → Appareils et services → Lights Simulator → Configurer*. Le panneau reste accessible :
+
+- depuis *Paramètres → Appareils et services → Lights Simulator* : lien **Ouvrir les réglages de Lights Simulator** du bouton *Configurer*, ou lien **Visiter** de l'appareil Lights Simulator ;
+- par le bouton « Ouvrir les réglages » de la carte Lovelace ;
+- à l'adresse `/lights-simulator`.
+
+Pour le réafficher dans la barre latérale, réactivez l'interrupteur dans le panneau ou dans *Configurer*.
 
 ![Configurer](docs/screenshots/configurer.png)
 
@@ -166,7 +172,13 @@ The card shows the mode, status, start time, sun, each lit light with its switch
 
 ### Removing Lights Simulator from the sidebar
 
-Turn off **Afficher dans la barre latérale** (show in sidebar) in the panel's *Fonctionnement* tab or in *Settings → Devices & services → Lights Simulator → Configure*. The panel stays reachable from the card's "Ouvrir les réglages" button, from the same *Configure* button (to show it again), or at `/lights-simulator`.
+Turn off **Afficher dans la barre latérale** (show in sidebar) in the panel's *Fonctionnement* tab or in *Settings → Devices & services → Lights Simulator → Configure*. The panel stays reachable:
+
+- from *Settings → Devices & services → Lights Simulator*: the **Open Lights Simulator settings** link in the *Configure* dialog, or the **Visit** link of the Lights Simulator device;
+- from the Lovelace card's "Ouvrir les réglages" button;
+- at `/lights-simulator`.
+
+To show it in the sidebar again, turn the switch back on in the panel or in *Configure*.
 
 ### Moving from a hand-made simulator
 

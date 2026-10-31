@@ -41,7 +41,7 @@
     "step": {
       "init": {
         "title": "Lights Simulator",
-        "description": "Simulator settings are made in the Lights Simulator panel. When hidden, the panel stays reachable from the Lovelace card (\"Ouvrir les réglages\" button) or at /lights-simulator.",
+        "description": "**[Open Lights Simulator settings](/lights-simulator)**\n\nSimulator settings are made in this panel. When hidden from the sidebar, it stays reachable through this link, the Lights Simulator device's \"Visit\" link, the Lovelace card (\"Ouvrir les réglages\" button) or at /lights-simulator.",
         "data": {
           "barre_laterale": "Show Lights Simulator in the sidebar"
         }
