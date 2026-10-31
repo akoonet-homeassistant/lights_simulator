@@ -191,3 +191,4 @@ Lights Simulator never changes or removes your existing helpers and automations.
 ## Licence / License
 
 MIT
+Auteur / Author : [@JeromeRoseau](https://github.com/JeromeRoseau).
