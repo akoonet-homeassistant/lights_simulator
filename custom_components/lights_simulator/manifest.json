@@ -2,7 +2,7 @@
   "domain": "lights_simulator",
   "name": "Lights Simulator",
   "after_dependencies": ["alarm_control_panel", "person", "sun"],
-  "codeowners": ["@akoonet-homeassistant"],
+  "codeowners": ["@JeromeRoseau"],
   "config_flow": true,
   "dependencies": ["frontend", "http", "panel_custom", "websocket_api"],
   "documentation": "https://github.com/akoonet-homeassistant/lights_simulator",
