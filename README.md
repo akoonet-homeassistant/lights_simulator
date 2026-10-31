@@ -26,7 +26,7 @@ Simulation de présence pour Home Assistant : quand la maison est vide, Lights S
 - **Contrôle des lampes** : une lampe qui ne confirme pas son allumage est écartée pendant un temps réglable.
 - **Reprise après redémarrage** de Home Assistant : chaque lampe garde son heure d'extinction.
 - **Sauvegarde de la configuration** : sauvegardes nommées dans Home Assistant (les 10 dernières), téléchargement et import d'un fichier JSON, copie de sécurité automatique avant chaque restauration.
-- **Panneau latéral** « Lights Simulator » et **carte Lovelace**.
+- **Panneau latéral** « Lights Simulator », ouvert à tous les utilisateurs, qu'on peut retirer de la barre latérale, et **carte Lovelace** avec l'heure d'arrêt de chaque lampe allumée.
 
 ### Installation
 
@@ -45,11 +45,11 @@ Copiez `custom_components/lights_simulator` dans le dossier `custom_components` 
 
 L'assistant demande ce qui déclenche le mode Auto (alarme, personnes ou les deux) et les lampes à utiliser. S'il trouve un simulateur « fait main » à base d'entrées `simulateur_presence_*`, il propose d'en reprendre les réglages (plages, jours, rythme, poids, mode) sans rien modifier.
 
-Tout le reste se règle dans le panneau **Lights Simulator** de la barre latérale (administrateurs) :
+Tout le reste se règle dans le panneau **Lights Simulator** de la barre latérale. Tous les utilisateurs de Home Assistant peuvent changer les réglages, pas seulement les administrateurs.
 
 | Onglet | Contenu |
 |---|---|
-| Fonctionnement | État, mode, démarrage prévu ou réel, fin tirée, lever et coucher du soleil, lampes allumées avec temps restant, journal |
+| Fonctionnement | État, mode, démarrage prévu ou réel, fin tirée, lever et coucher du soleil, lampes allumées avec heure d'arrêt, affichage dans la barre latérale, journal |
 | Plages | Plage du soir et du matin : sélecteur Soleil / Heure fixe / Luminosité, fin et variation, jours |
 | Lampes | Une ligne par lampe ; fiche de lampe : poids, capteur de luminosité, seuil, comportement si la pièce est éclairée, actions, retour de nuit ; bouton Tester |
 | Rythme | Déclenchement (alarme, personnes), durées d'allumage, pauses, lampes simultanées, contrôle des lampes |
@@ -98,7 +98,15 @@ Tout le reste se règle dans le panneau **Lights Simulator** de la barre latéra
 type: custom:lights-simulator-card
 ```
 
+La carte affiche le mode, l'état, le démarrage, le soleil, chaque lampe allumée avec son heure d'arrêt (« Cuisine — jusqu'à 15:04 · 38 min ») et la dernière action. Le bouton « Ouvrir les réglages » mène au panneau.
+
 Options : `titre` (texte affiché), `prefixe` (si vous avez renommé les entités ; défaut `lights_simulator`). La carte est chargée automatiquement, aucune ressource à ajouter.
+
+### Retirer Lights Simulator de la barre latérale
+
+Désactivez **Afficher dans la barre latérale**, dans l'onglet *Fonctionnement* du panneau ou par *Paramètres → Appareils et services → Lights Simulator → Configurer*. Le panneau reste accessible par le bouton « Ouvrir les réglages » de la carte, par ce même bouton *Configurer* (pour le réafficher), ou à l'adresse `/lights-simulator`.
+
+![Configurer](docs/screenshots/configurer.png)
 
 ### Passer d'un simulateur « fait main » à Lights Simulator
 
@@ -124,7 +132,7 @@ Presence simulation for Home Assistant: while the house is empty, Lights Simulat
 - **Light check**: a light that does not confirm it switched on is set aside for a configurable time.
 - **Resume after a Home Assistant restart**: each light keeps its switch-off time.
 - **Configuration backup**: named backups stored in Home Assistant (last 10), JSON file download and import, automatic safety copy before every restore.
-- **Sidebar panel** "Lights Simulator" and **Lovelace card**.
+- **Sidebar panel** "Lights Simulator", open to every user and removable from the sidebar, and **Lovelace card** showing when each lit light will switch off.
 
 ### Installation
 
@@ -136,11 +144,11 @@ Presence simulation for Home Assistant: while the house is empty, Lights Simulat
 
 The setup flow asks what triggers Auto mode (alarm, people or either) and which lights to use. If it finds a hand-made simulator built from `simulateur_presence_*` helpers, it offers to import its settings (windows, days, rhythm, weights, mode) without changing them.
 
-Everything else is set in the **Lights Simulator** sidebar panel (administrators): *Fonctionnement* (status, mode, start time, drawn end, sunrise and sunset, lit lights with remaining time, log), *Plages* (evening and morning windows), *Lampes* (per-light settings and Test button), *Rythme* (trigger, durations, pauses, simultaneous lights, light check), *Entités* (created entities), *Sauvegarde* (backups and files). The interface is in French.
+Everything else is set in the **Lights Simulator** sidebar panel. Every Home Assistant user can change the settings, not only administrators. Tabs: *Fonctionnement* (status, mode, start time, drawn end, sunrise and sunset, lit lights with switch-off time, sidebar display, log), *Plages* (evening and morning windows), *Lampes* (per-light settings and Test button), *Rythme* (trigger, durations, pauses, simultaneous lights, light check), *Entités* (created entities), *Sauvegarde* (backups and files). The interface is in French.
 
 ### Screenshots
 
-The interface is in French. Screenshots are in the French section above: [Fonctionnement](docs/screenshots/fonctionnement.png) (status), [Plages](docs/screenshots/plages.png) (windows), [Lampes](docs/screenshots/lampes.png) (lights), [lamp form](docs/screenshots/lampe.png), [Rythme](docs/screenshots/rythme.png) (trigger and rhythm), [Sauvegarde](docs/screenshots/sauvegarde.png) (backup), [Entités](docs/screenshots/entites.png) (entities), [setup flow](docs/screenshots/installation.png), [Lovelace card](docs/screenshots/carte.png). They were taken on a demo installation; all entities are fictitious.
+The interface is in French. Screenshots are in the French section above: [Fonctionnement](docs/screenshots/fonctionnement.png) (status), [Plages](docs/screenshots/plages.png) (windows), [Lampes](docs/screenshots/lampes.png) (lights), [lamp form](docs/screenshots/lampe.png), [Rythme](docs/screenshots/rythme.png) (trigger and rhythm), [Sauvegarde](docs/screenshots/sauvegarde.png) (backup), [Entités](docs/screenshots/entites.png) (entities), [setup flow](docs/screenshots/installation.png), [Configure dialog](docs/screenshots/configurer.png), [Lovelace card](docs/screenshots/carte.png). They were taken on a demo installation; all entities are fictitious.
 
 ### Entities
 
@@ -153,6 +161,12 @@ type: custom:lights-simulator-card
 ```
 
 Options: `titre` (title), `prefixe` (if you renamed the entities; default `lights_simulator`). The card is loaded automatically, no resource to add.
+
+The card shows the mode, status, start time, sun, each lit light with its switch-off time ("Cuisine — jusqu'à 15:04 · 38 min") and the last action. The "Ouvrir les réglages" button opens the panel.
+
+### Removing Lights Simulator from the sidebar
+
+Turn off **Afficher dans la barre latérale** (show in sidebar) in the panel's *Fonctionnement* tab or in *Settings → Devices & services → Lights Simulator → Configure*. The panel stays reachable from the card's "Ouvrir les réglages" button, from the same *Configure* button (to show it again), or at `/lights-simulator`.
 
 ### Moving from a hand-made simulator
 

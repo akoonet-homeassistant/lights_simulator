@@ -36,5 +36,16 @@
         "les_deux": "L'un ou l'autre"
       }
     }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Lights Simulator",
+        "description": "Les réglages du simulateur se font dans le panneau Lights Simulator. Masqué, le panneau reste accessible par la carte Lovelace (bouton « Ouvrir les réglages ») ou à l'adresse /lights-simulator.",
+        "data": {
+          "barre_laterale": "Afficher Lights Simulator dans la barre latérale"
+        }
+      }
+    }
   }
 }

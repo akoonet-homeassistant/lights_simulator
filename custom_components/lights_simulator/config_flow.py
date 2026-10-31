@@ -5,7 +5,8 @@ from __future__ import annotations
 from typing import Any
 
 import voluptuous as vol
-from homeassistant.config_entries import ConfigFlow, ConfigFlowResult
+from homeassistant.config_entries import ConfigEntry, ConfigFlow, ConfigFlowResult, OptionsFlow
+from homeassistant.core import callback
 from homeassistant.helpers import selector
 
 from .const import DECL_ALARME, DECL_LES_DEUX, DECL_PERSONNES, DECLENCHEURS, DOMAIN, NOM_APPAREIL, reglages_par_defaut
@@ -16,6 +17,12 @@ class LightsSimulatorConfigFlow(ConfigFlow, domain=DOMAIN):
     """Une seule instance : déclencheur, lampes, reprise éventuelle de l'ancien simulateur."""
 
     VERSION = 1
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(config_entry: ConfigEntry) -> LightsSimulatorOptionsFlow:
+        """Bouton « Configurer » de l'intégration."""
+        return LightsSimulatorOptionsFlow()
 
     async def async_step_user(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
         """Première et unique étape."""
@@ -66,4 +73,22 @@ class LightsSimulatorConfigFlow(ConfigFlow, domain=DOMAIN):
         return self.async_show_form(
             step_id="user", data_schema=self.add_suggested_values_to_schema(vol.Schema(champs), user_input or {}),
             errors=erreurs,
+        )
+
+
+class LightsSimulatorOptionsFlow(OptionsFlow):
+    """Bouton « Configurer » : affichage du panneau dans la barre latérale.
+
+    Tous les autres réglages se font dans le panneau Lights Simulator.
+    """
+
+    async def async_step_init(self, user_input: dict[str, Any] | None = None) -> ConfigFlowResult:
+        options = self.config_entry.options
+        if user_input is not None:
+            return self.async_create_entry(data={**options, "barre_laterale": user_input["barre_laterale"]})
+        return self.async_show_form(
+            step_id="init",
+            data_schema=vol.Schema({
+                vol.Required("barre_laterale", default=options.get("barre_laterale", True)): selector.BooleanSelector(),
+            }),
         )

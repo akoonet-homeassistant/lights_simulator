@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 DOMAIN = "lights_simulator"
-VERSION = "2026.11.1"
+VERSION = "2026.11.2"
 NOM_APPAREIL = "Lights Simulator"
 
 PANEL_URL = "lights-simulator"
@@ -55,6 +55,7 @@ def reglages_par_defaut() -> dict:
         "etats_absence": ["armed_away"],
         "personnes": [],
         "delai_vide": 5,
+        "barre_laterale": True,
         "soir": {
             "debut_mode": BORNE_SOLEIL,
             "decalage_coucher": 7,

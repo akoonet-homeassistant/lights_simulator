@@ -15,7 +15,7 @@ from .const import BORNES, DECLENCHEURS, DOMAIN, MODES, SI_ECLAIREE, lampe_par_d
 from .engine import Moteur
 
 SECTIONS_SIMPLES = {"soir", "matin", "rythme"}
-CLES_GENERALES = {"declencheur", "alarme", "etats_absence", "personnes", "delai_vide"}
+CLES_GENERALES = {"declencheur", "alarme", "etats_absence", "personnes", "delai_vide", "barre_laterale"}
 CLES_LAMPE_RECHARGE = ("entity_id", "nom", "capteur")
 EFFACABLES = {"alarme", "lux_capteur"}  # réglages qu'on peut vider (None)
 MINIMUMS = {
@@ -128,7 +128,6 @@ async def ws_mode(hass: HomeAssistant, connection, msg: dict) -> None:
     connection.send_result(msg["id"], _etat_complet(hass, moteur))
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command({
     vol.Required("type"): f"{DOMAIN}/reglages",
     vol.Required("section"): vol.In(sorted(SECTIONS_SIMPLES | {"general"})),
@@ -172,7 +171,6 @@ SCHEMA_LAMPE = vol.Schema({
 }, extra=vol.REMOVE_EXTRA)
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command({vol.Required("type"): f"{DOMAIN}/lampe_enregistrer", vol.Required("lampe"): dict})
 @websocket_api.async_response
 async def ws_lampe_enregistrer(hass: HomeAssistant, connection, msg: dict) -> None:
@@ -211,7 +209,6 @@ async def ws_lampe_enregistrer(hass: HomeAssistant, connection, msg: dict) -> No
     connection.send_result(msg["id"], {"recharge": recharger})
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command({vol.Required("type"): f"{DOMAIN}/lampe_supprimer", vol.Required("lampe_id"): str})
 @websocket_api.async_response
 async def ws_lampe_supprimer(hass: HomeAssistant, connection, msg: dict) -> None:
@@ -236,7 +233,6 @@ async def ws_lampe_supprimer(hass: HomeAssistant, connection, msg: dict) -> None
     connection.send_result(msg["id"], {"recharge": True})
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command({vol.Required("type"): f"{DOMAIN}/lampe_tester", vol.Required("lampe_id"): str})
 @websocket_api.async_response
 async def ws_lampe_tester(hass: HomeAssistant, connection, msg: dict) -> None:
@@ -249,7 +245,6 @@ async def ws_lampe_tester(hass: HomeAssistant, connection, msg: dict) -> None:
     connection.send_result(msg["id"], _etat_complet(hass, moteur))
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command({vol.Required("type"): f"{DOMAIN}/sauvegarde_creer", vol.Optional("nom"): str})
 @websocket_api.async_response
 async def ws_sauvegarde_creer(hass: HomeAssistant, connection, msg: dict) -> None:
@@ -262,7 +257,6 @@ async def ws_sauvegarde_creer(hass: HomeAssistant, connection, msg: dict) -> Non
     connection.send_result(msg["id"], _etat_complet(hass, moteur))
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command({vol.Required("type"): f"{DOMAIN}/sauvegarde_supprimer", vol.Required("sauvegarde_id"): str})
 @websocket_api.async_response
 async def ws_sauvegarde_supprimer(hass: HomeAssistant, connection, msg: dict) -> None:
@@ -275,7 +269,6 @@ async def ws_sauvegarde_supprimer(hass: HomeAssistant, connection, msg: dict) ->
     connection.send_result(msg["id"], _etat_complet(hass, moteur))
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command({vol.Required("type"): f"{DOMAIN}/sauvegarde_restaurer", vol.Required("sauvegarde_id"): str})
 @websocket_api.async_response
 async def ws_sauvegarde_restaurer(hass: HomeAssistant, connection, msg: dict) -> None:
@@ -292,7 +285,6 @@ async def ws_sauvegarde_restaurer(hass: HomeAssistant, connection, msg: dict) ->
     connection.send_result(msg["id"], {"recharge": True})
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command({vol.Required("type"): f"{DOMAIN}/exporter", vol.Optional("sauvegarde_id"): str})
 @callback
 def ws_exporter(hass: HomeAssistant, connection, msg: dict) -> None:
@@ -328,7 +320,6 @@ def valider_fichier(donnees: Any) -> dict:
     return reglages
 
 
-@websocket_api.require_admin
 @websocket_api.websocket_command({vol.Required("type"): f"{DOMAIN}/importer", vol.Required("donnees"): dict})
 @websocket_api.async_response
 async def ws_importer(hass: HomeAssistant, connection, msg: dict) -> None:

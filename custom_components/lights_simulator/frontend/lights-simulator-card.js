@@ -56,6 +56,23 @@ class LightsSimulatorCard extends HTMLElement {
     return i >= 0 ? t.slice(i + 3) : t;
   }
 
+  // Heure d'arrêt dans le fuseau de Home Assistant (pas celui du navigateur)
+  _heure(iso) {
+    try {
+      return new Date(iso).toLocaleTimeString("fr-FR", { hour: "2-digit", minute: "2-digit", timeZone: this._hass.config?.time_zone });
+    } catch (e) {
+      return "";
+    }
+  }
+
+  // Une ligne par lampe allumée par le simulateur, avec son heure d'arrêt
+  _lampes() {
+    const lampes = this._etat("sensor.lampes_allumees")?.attributes?.lampes || [];
+    if (!lampes.length) return `<div class="row"><span class="k">Lampes allumées</span><span>Aucune</span></div>`;
+    return `<div class="lampes"><span class="k">Lampes allumées</span>${lampes.map((l) =>
+      `<div class="lampe"><span>${lsEsc(l.nom)}</span><span class="fin">jusqu'à ${lsEsc(this._heure(l.fin))} <span class="k">· ${lsEsc(l.reste)} min</span></span></div>`).join("")}</div>`;
+  }
+
   _clic(e) {
     const cible = e.target.closest("[data-action]");
     if (!cible) return;
@@ -86,6 +103,9 @@ class LightsSimulatorCard extends HTMLElement {
         .seg button.on { background: var(--primary-color, #0277bd); color: #fff; }
         .row { display: flex; justify-content: space-between; gap: 12px; padding: 8px 0; border-top: 1px solid var(--divider-color, #eee); font-size: 14px; }
         .row span:last-child { text-align: right; }
+        .lampes { padding: 8px 0; border-top: 1px solid var(--divider-color, #eee); font-size: 14px; }
+        .lampe { display: flex; justify-content: space-between; gap: 12px; padding: 6px 0 0 12px; }
+        .lampe .fin { font-variant-numeric: tabular-nums; white-space: nowrap; }
         .lien { align-self: flex-end; min-height: 44px; padding: 0 14px; border-radius: 8px; border: 1px solid var(--divider-color, #bdbdbd); background: transparent; color: var(--primary-color); font-family: inherit; font-size: 14px; font-weight: 500; cursor: pointer; }
       </style>
       <ha-card>
@@ -98,10 +118,10 @@ class LightsSimulatorCard extends HTMLElement {
         <div>
           <div class="row"><span class="k">Démarrage</span><span>${lsEsc(this._texte("sensor.demarrage"))}</span></div>
           <div class="row"><span class="k">Soleil</span><span>lever ${lsEsc(this._prochain("sensor.lever_du_soleil"))} · coucher ${lsEsc(this._prochain("sensor.coucher_du_soleil"))}</span></div>
-          <div class="row"><span class="k">Lampes allumées</span><span>${lsEsc(this._texte("sensor.lampes_allumees", "Aucune"))}</span></div>
+          ${this._lampes()}
           <div class="row"><span class="k">Dernière action</span><span>${lsEsc(this._texte("sensor.derniere_action"))}</span></div>
         </div>
-        ${this._hass.user?.is_admin ? `<button type="button" class="lien" data-action="reglages">Ouvrir les réglages</button>` : ""}
+        <button type="button" class="lien" data-action="reglages">Ouvrir les réglages</button>
       </ha-card>`;
   }
 }

@@ -5,8 +5,7 @@ from __future__ import annotations
 import logging
 from pathlib import Path
 
-from homeassistant.components import panel_custom
-from homeassistant.components.frontend import add_extra_js_url, async_remove_panel
+from homeassistant.components.frontend import add_extra_js_url
 from homeassistant.components.http import StaticPathConfig
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
@@ -17,14 +16,11 @@ from . import websocket
 from .const import (
     CARD_ELEMENT,
     DOMAIN,
-    PANEL_ELEMENT,
-    PANEL_ICON,
-    PANEL_TITLE,
-    PANEL_URL,
     STATIC_URL,
     VERSION,
 )
 from .engine import Moteur
+from .panneau import async_installer_panneau, async_retirer_panneau
 
 PLATFORMS = [Platform.BINARY_SENSOR, Platform.NUMBER, Platform.SELECT, Platform.SENSOR, Platform.SWITCH]
 CLE_FRONTEND = f"{DOMAIN}_frontend"
@@ -52,18 +48,16 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     await moteur.async_demarrer()
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = moteur
 
-    await panel_custom.async_register_panel(
-        hass,
-        webcomponent_name=PANEL_ELEMENT,
-        frontend_url_path=PANEL_URL,
-        module_url=f"{STATIC_URL}/{PANEL_ELEMENT}.js?v={VERSION}",
-        sidebar_title=PANEL_TITLE,
-        sidebar_icon=PANEL_ICON,
-        require_admin=True,
-        config={"entry_id": entry.entry_id},
-    )
+    await async_installer_panneau(hass, entry)
+    # Options modifiées (panneau ou bouton « Configurer ») : la barre latérale suit
+    entry.async_on_unload(entry.add_update_listener(_options_modifiees))
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     return True
+
+
+async def _options_modifiees(hass: HomeAssistant, entry: ConfigEntry) -> None:
+    """Affiche ou masque le panneau dans la barre latérale si le réglage a changé."""
+    await async_installer_panneau(hass, entry)
 
 
 async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
@@ -72,7 +66,7 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if ok:
         moteur: Moteur = hass.data[DOMAIN].pop(entry.entry_id)
         await moteur.async_arreter()
-        async_remove_panel(hass, PANEL_URL)
+        async_retirer_panneau(hass)
     return ok
 
 

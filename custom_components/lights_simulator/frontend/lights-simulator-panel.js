@@ -312,7 +312,7 @@ class LightsSimulatorPanel extends HTMLElement {
     const i = this._donnees.instantane;
     const pill = i.mode === "arret" ? "gris" : i.actif ? "orange" : "bleu";
     const lampes = i.lampes_allumees.length
-      ? i.lampes_allumees.map((l) => `<div class="row"><span>${esc(l.nom)}</span><span class="k">s'éteint dans ${l.reste} min</span></div>`).join("")
+      ? i.lampes_allumees.map((l) => `<div class="row"><span>${esc(l.nom)}</span><span class="nowrap">jusqu'à ${heure(l.fin)} <span class="k">· ${l.reste} min</span></span></div>`).join("")
       : `<p class="k">Aucune pour l'instant.</p>`;
     const journal = i.journal.length
       ? i.journal.slice(0, 12).map((j) => `<div class="row debut"><span class="k heure">${heure(j.t)}</span><span>${esc(j.texte)}</span></div>`).join("")
@@ -342,6 +342,11 @@ class LightsSimulatorPanel extends HTMLElement {
         </div>
       </section>
       <section class="card"><h2>Lampes allumées par le simulateur</h2>${lampes}</section>
+      <section class="card">
+        <h2>Affichage</h2>
+        ${this._interrupteur("Afficher dans la barre latérale", "general", "barre_laterale", this._valeur("general", "barre_laterale") !== false)}
+        <p class="k petit">Masqué, le panneau reste accessible par la carte Lovelace (bouton « Ouvrir les réglages »), par Paramètres → Appareils et services → Lights Simulator → Configurer, ou à l'adresse /lights-simulator.</p>
+      </section>
       <section class="card"><h2>Journal</h2>${journal}</section>`;
   }
 
@@ -643,7 +648,7 @@ const STYLE = `
   .entete-lampes { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; } .entete-lampes p { margin: 0; max-width: 720px; font-size: 14px; }
   .masque { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
   code { font-family: ui-monospace, Menlo, monospace; font-size: 13px; }
-  td.nowrap { white-space: nowrap; }
+  td.nowrap, .nowrap { white-space: nowrap; }
   .message { max-width: 1148px; margin: 12px auto 0; padding: 10px 16px; border-radius: 8px; background: #e1f5fe; color: #01579b; font-size: 14px; }
   .voile { position: fixed; inset: 0; background: rgba(0,0,0,.4); display: flex; justify-content: center; align-items: flex-start; overflow-y: auto; padding: 24px 12px; z-index: 10; }
   .dialogue { width: min(640px, 100%); background: var(--card-background-color, #fff); border-radius: 16px; overflow: hidden; }
