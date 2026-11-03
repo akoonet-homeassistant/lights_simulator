@@ -6,7 +6,7 @@
 
 [![Release](https://img.shields.io/github/v/release/akoonet-homeassistant/lights_simulator)](https://github.com/akoonet-homeassistant/lights_simulator/releases)
 [![License](https://img.shields.io/github/license/akoonet-homeassistant/lights_simulator)](LICENSE)
-[![HACS](https://img.shields.io/badge/HACS-Custom-41BDF5.svg)](https://hacs.xyz/docs/faq/custom_repositories)
+[![HACS](https://img.shields.io/badge/HACS-Default-41BDF5.svg)](https://hacs.xyz)
 
 ![Lights Simulator](docs/screenshots/fonctionnement.png)
 
@@ -34,8 +34,9 @@ Simulation de présence pour Home Assistant : quand la maison est vide, Lights S
 
 #### Par HACS
 
-1. Dans HACS, recherchez **Lights Simulator** et installez-le.
-   Si l'intégration n'apparaît pas encore dans la recherche : menu ⋮ → *Dépôts personnalisés*, ajoutez `https://github.com/akoonet-homeassistant/lights_simulator`, catégorie *Intégration*.
+[![Ouvrir dans HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=akoonet-homeassistant&repository=lights_simulator&category=integration)
+
+1. Dans HACS, recherchez **Lights Simulator** et installez-le (ou utilisez le bouton ci-dessus).
 2. Redémarrez Home Assistant.
 3. *Paramètres → Appareils et services → Ajouter une intégration* → **Lights Simulator**.
 
@@ -144,7 +145,7 @@ Presence simulation for Home Assistant: while the house is empty, Lights Simulat
 
 ### Installation
 
-**HACS**: search for **Lights Simulator** and install it (if it does not show up yet: ⋮ menu → *Custom repositories*, add `https://github.com/akoonet-homeassistant/lights_simulator`, type *Integration*). Restart Home Assistant, then *Settings → Devices & services → Add integration* → **Lights Simulator**.
+**HACS**: search for **Lights Simulator** and install it, or use this button: [![Open in HACS](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=akoonet-homeassistant&repository=lights_simulator&category=integration) Restart Home Assistant, then *Settings → Devices & services → Add integration* → **Lights Simulator**.
 
 **Manual**: copy `custom_components/lights_simulator` into your `custom_components` folder, restart, then add the integration.
 
