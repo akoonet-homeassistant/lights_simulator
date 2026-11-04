@@ -269,9 +269,15 @@ class Moteur:
         alarme = self._alarme_absente() if declencheur in (DECL_ALARME, DECL_LES_DEUX) else None
         personnes = self._personnes_absentes() if declencheur in (DECL_PERSONNES, DECL_LES_DEUX) else None
         if declencheur == DECL_LES_DEUX:
-            if alarme is None and personnes is None:
+            if alarme or personnes:
+                absent = True
+            elif alarme is False and personnes is False:
+                absent = False
+            else:
+                # L'une des deux sources ne répond pas (redémarrage de Home Assistant,
+                # alarme « unknown ») et l'autre ne dit pas « absent » : on ne peut pas
+                # conclure à un retour, on garde l'état précédent.
                 return
-            absent = bool(alarme) or bool(personnes)
         else:
             absent = alarme if declencheur == DECL_ALARME else personnes
             if absent is None:
@@ -404,7 +410,7 @@ class Moteur:
         r = self.reglages
         ry = r["rythme"]
         self.prochain = maintenant.timestamp() + logic.tirer_pause(ry["pause_min"], ry["pause_max"], self.rng) * 60
-        if len(self.allumees) >= int(ry.get("simultanees", 1)):
+        if len(self._lampes_allumees_reelles()) >= int(ry.get("simultanees", 1)):
             return
         candidats = {
             l["id"]: l for l in r["lampes"]
@@ -436,6 +442,18 @@ class Moteur:
                 return
             await self._allumer(lampe, duree)
             return
+
+    def _lampes_allumees_reelles(self) -> set[str]:
+        """Lampes du simulateur allumées : celles qu'il a allumées et celles qui sont allumées
+        sans lui (allumage manuel, interrupteur resté allumé après un redémarrage)."""
+        allumees = set(self.allumees)
+        for lampe in self.reglages["lampes"]:
+            if not lampe.get("utilisee"):
+                continue
+            etat = self.hass.states.get(lampe["entity_id"])
+            if etat is not None and etat.state == "on":
+                allumees.add(lampe["entity_id"])
+        return allumees
 
     async def _allumer(self, lampe: dict, duree: int) -> None:
         ry = self.reglages["rythme"]
